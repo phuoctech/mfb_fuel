@@ -28,4 +28,9 @@ class Controller_Login extends \Fuel\Core\Controller_Template
         
     }
     
+    public function action_test() {
+        Config::load('facebook');
+        echo Config::get('appId');
+    }
+    
 }

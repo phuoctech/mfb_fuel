@@ -12,20 +12,20 @@
     <title>SB Admin 2 - Bootstrap Admin Theme</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-
+    {{ asset_css('bootstrap.min.css')}}
     <!-- MetisMenu CSS -->
-    {{ asset_css('plugins/metisMenu/metisMenu.min.css')|raw }}
+    {{ asset_css('plugins/metisMenu/metisMenu.min.css')}}
 
     <!-- Custom CSS -->
-    <link href="assets/css/sb-admin-2.css" rel="stylesheet">
+    {{ asset_css('sb-admin-2.css')}}
 
     <!-- Custom Fonts -->
     <link href="assets/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    {{ asset_find_file('font-awesome.min.css','css', 'font-awesome-4.1.0/css/') }}
     
     <!-- My Style -->
-    <link href="assets/css/plugins/social-buttons.css" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet">
+    {{ asset_css('plugins/social-buttons.css')}}
+    {{ asset_css('style.css')}}
     
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
