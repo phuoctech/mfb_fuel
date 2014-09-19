@@ -65,6 +65,22 @@ class Facebook
         return $response->getGraphObject(GraphUser::className());    
         
     }
+    
+    /*
+     * @Param
+     * @Return
+     */
+    
+    public function get_user_pages($access_token) {
+        $session = $this->get_session_from_token($access_token);
+        if (!$session->validate()) return false;
+        
+        $request = (new FacebookRequest($session, 'GET', '/me/accounts'))->execute();
+        $response = $request->getGraphObject();
+
+        //*** Get array of Page objects
+        return $response->getPropertyAsArray('data');
+    }
 
 
     /**************************************************************************/

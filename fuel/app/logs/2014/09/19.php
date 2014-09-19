@@ -535,3 +535,10 @@ ERROR - 2014-09-19 16:39:29 --> Fatal Error - Call to undefined method Controlle
 WARNING - 2014-09-19 16:39:44 --> Fuel\Core\Fuel::init - The configured locale en_US is not installed on your system.
 WARNING - 2014-09-19 16:40:41 --> Fuel\Core\Fuel::init - The configured locale en_US is not installed on your system.
 WARNING - 2014-09-19 16:40:45 --> Fuel\Core\Fuel::init - The configured locale en_US is not installed on your system.
+WARNING - 2014-09-19 17:30:17 --> Fuel\Core\Fuel::init - The configured locale en_US is not installed on your system.
+ERROR - 2014-09-19 17:30:23 --> Notice - Undefined variable: user_session in /home/dell-l006/Github/mfb_fuel/fuel/app/classes/libs/facebook.php on line 78
+WARNING - 2014-09-19 17:30:59 --> Fuel\Core\Fuel::init - The configured locale en_US is not installed on your system.
+WARNING - 2014-09-19 17:32:36 --> Fuel\Core\Fuel::init - The configured locale en_US is not installed on your system.
+ERROR - 2014-09-19 17:32:39 --> Fatal Error - Using $this when not in object context in /home/dell-l006/Github/mfb_fuel/fuel/app/classes/libs/helper/filter.php on line 20
+WARNING - 2014-09-19 17:34:15 --> Fuel\Core\Fuel::init - The configured locale en_US is not installed on your system.
+WARNING - 2014-09-19 17:36:14 --> Fuel\Core\Fuel::init - The configured locale en_US is not installed on your system.

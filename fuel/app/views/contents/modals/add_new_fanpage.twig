@@ -11,11 +11,9 @@
                     <div class="form-group">
                         <label>Select a fanpage</label>
                         <select class="form-control" name="fanpage">
-                            <?php if (!empty($user_pages)): ?>
-                                <?php foreach($user_pages as $item): ?>
-                                    <option value="<?php echo $item['id'] ?>" ><?php echo $item['name'] ?></option>
-                                <?php endforeach; ?>
-                            <?php endif; ?>                            
+                            {% for item in user_pages %}
+                                <option value="{{item['id'] }}" >{{ item['name'] }}</option>
+                            {% endfor %} 
                         </select>
                     </div>
             </div>
