@@ -1,6 +1,6 @@
 <?php
 /*
- * Class Facebook
+ * Class Facebook used in FuelPHP 1.7
  * @Author: EchPay
  * @Version: 1.0
  * 
@@ -14,27 +14,68 @@ use Facebook\FacebookRequestException;
 use Fuel\Core\Config;
 class Facebook
 {
-    public static $session;
-    public static $helper;
+    public $session = null;
+    public $helper = null;
     
-    public static function forge() {
+    public function __construct() {
         
         Config::load('facebook');
         FacebookSession::setDefaultApplication(Config::get('appId'), Config::get('appSecret'));
         
-        $helper = new FacebookRedirectLoginHelperTest(Config::get('login_url'));
-        
-        try {
-            $session = $helper->getSessionFromRedirect();
-            return $session;
-        } catch(FacebookRequestException $ex) {
-            // When Facebook returns an error
-        } catch(\Exception $ex) {
-            // When validation fails or other local issues
-        }
+        $this->helper = new FacebookRedirectLoginHelper(Config::get('login_url'));
     }
     
-    public function login() {
+    /*
+     * @Return: string
+     */
+    public function get_login_url() {
+        return $this->helper->getLoginUrl();
+    }
+    
+    /*
+     * @Param: 
+     * - access_token: string
+     * @Return: string | bool
+     */    
+    public function exchange_long_lived_token($access_token) {
+        $session = new FacebookSession($access_token);
+        
+        // Check validate token
+        if ($session->validate()) {
+            $long_lived_session = $session->getLongLivedSession();
+            return $long_lived_session->getToken();
+        }
+        
+        return false;
+    }
+    
+    /*
+     * @Param: 
+     * - access_token: string
+     * @Return: Object
+     */
+    public function get_user_information($access_token) {
+        
+        $session = $this->get_session_from_token($access_token);
+        if (!$session->validate()) return false;
+        
+        //*** Call api
+        $request = new FacebookRequest($session, 'GET', '/me');
+        $response = $request->execute();
+        return $response->getGraphObject(GraphUser::className());    
+        
+    }
+
+
+    /**************************************************************************/
+    /*
+     * @Param: 
+     * - access_token: string
+     * @Return: string | bool
+     */
+    public function get_session_from_token($access_token) {
+        
+        return new FacebookSession($access_token);
         
     }
 }

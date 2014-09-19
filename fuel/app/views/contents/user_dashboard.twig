@@ -1,24 +1,13 @@
-    <div class="col-md-12">
-    <p class="clearfix"><a href="#" id="add-new-fanpage" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">Add new fanpage</a></p>
-    </div>        
 
+<div class="col-md-12">
+    <p class="clearfix"><a href="#" id="add-new-fanpage" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">Add new fanpage</a></p>
+</div>        
+
+{% for item in page_list %}
     <div class="col-md-4 fanpage">
-        <a href="#"><img class="img-responsive" src="assets/img/fanpage.jpg"/></a>
-        <a href="#"><h3>Geekboy - TimChoi</h3></a>
-    </div><!--/.fanpage-->
-    <div class="col-md-4 fanpage">
-        <a href="#"><img class="img-responsive" src="assets/img/fanpage.jpg"/></a>
-        <a href="#"><h3>Geekboy - TimChoi</h3></a>
-    </div><!--/.fanpage-->
-    <div class="col-md-4 fanpage">
-        <a href="#"><img class="img-responsive" src="assets/img/fanpage.jpg"/></a>
-        <a href="#"><h3>Geekboy - TimChoi</h3></a>
-    </div><!--/.fanpage-->
-    <div class="col-md-4 fanpage">
-        <a href="#"><img class="img-responsive" src="assets/img/fanpage.jpg"/></a>
-        <a href="#"><h3>Geekboy - TimChoi</h3></a>
-    </div><!--/.fanpage-->
-    <div class="col-md-4 fanpage">
-        <a href="#"><img class="img-responsive" src="assets/img/fanpage.jpg"/></a>
-        <a href="#"><h3>Geekboy - TimChoi</h3></a>
-    </div><!--/.fanpage-->
+        <a href="#"><img class="img-responsive" src="{{ item['cover'] }}"/></a>
+        <a href="#"><h3>{{ item['name'] }}</h3></a>
+    </div><!--/.fanpage-->        
+{% endfor %}
+
+

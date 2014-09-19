@@ -12,19 +12,19 @@
     <title>SB Admin 2 - Bootstrap Admin Theme</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-
+    {{ asset_css('bootstrap.min.css')}}
+    
     <!-- MetisMenu CSS -->
-    <link href="assets/css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
-
+    {{ asset_css('plugins/metisMenu/metisMenu.min.css')}}
+    
     <!-- Custom CSS -->
-    <link href="assets/css/sb-admin-2.css" rel="stylesheet">
-
+    {{ asset_css('sb-admin-2.css')}}
+    
     <!-- Custom Fonts -->
-    <link href="assets/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ base_url() }}/assets/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     
     <!-- My Style -->
-    <link href="assets/css/style.css" rel="stylesheet">
+    {{ asset_css('style.css')}}
     
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -57,17 +57,17 @@
     <!-- /#wrapper -->
 
     <!-- jQuery Version 1.11.0 -->
-    <script src="assets/js/jquery-1.11.0.js"></script>
-
+    {{ asset_js('jquery-1.11.0.js')}}
+    
     <!-- Bootstrap Core JavaScript -->
-    <script src="assets/js/bootstrap.min.js"></script>
-
+    {{ asset_js('bootstrap.min.js')}}
+    
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="assets/js/plugins/metisMenu/metisMenu.min.js"></script>
-
+    {{ asset_js('plugins/metisMenu/metisMenu.min.js')}}
+    
     <!-- Custom Theme JavaScript -->
-    <script src="assets/js/sb-admin-2.js"></script>
-
+    {{ asset_js('sb-admin-2.js')}}
+    
 </body>
 
 </html>
