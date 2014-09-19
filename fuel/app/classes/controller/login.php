@@ -3,17 +3,19 @@ use Fuel\Core\Controller;
 class Controller_Login extends \Fuel\Core\Controller_Template
 {
     public $template = 'login.twig';
-    
+    public $facebook = null;
     public function before() {
         parent::before();
         
         if (Session::get('user_token')) {
             Response::redirect('fanpage/index');
-        }        
+        }
+        
+        $this->facebook = new Libs\Facebook;
     }
     
     public function action_index() {
-        $session = Libs\Facebook::$session;
+        $session = $this->facebook->session;
         // Exchange to long lived token
         
         if (isset($session) && $session->validate()) { // Login successful
@@ -29,8 +31,7 @@ class Controller_Login extends \Fuel\Core\Controller_Template
     }
     
     public function action_test() {
-        Config::load('facebook');
-        echo Config::get('appId');
+        $this->facebook->test();
     }
     
 }
