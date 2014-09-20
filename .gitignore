@@ -1,0 +1,5 @@
+/nbproject/private/
+/fuel/vendor/**/*
+/fuel/app/cache/**/*
+/fuel/app/logs/**/*
+/**/*~
