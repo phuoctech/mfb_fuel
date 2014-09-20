@@ -1,5 +1,7 @@
-/nbproject/private/
+nbproject
 /fuel/vendor/**/*
 /fuel/app/cache/**/*
 /fuel/app/logs/**/*
 /**/*~
+docs/
+fuel/vendorold
