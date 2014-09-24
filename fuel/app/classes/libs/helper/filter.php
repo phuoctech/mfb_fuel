@@ -17,7 +17,7 @@ class Filter
             $item = $item->asArray(); //Convert oject to array
             if (in_array('CREATE_CONTENT', $item['perms'])) {
                 //*** Check if fanpage has added in DB
-                if ( empty(\Model_Pages::find( 'first', array( 'where' => array( 'fanpage_id' => $item['id'] ) ) ))) {
+                if ( empty(\Model_UserPage::find( 'first', array( 'where' => array( 'fanpage_id' => $item['id'], 'user_id' => $user_id ) ) ))) {
                     $result[] = array(
                         'name' => $item['name'],
                         'id' => $item['id'],

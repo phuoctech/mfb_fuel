@@ -67,8 +67,35 @@ class Facebook
     }
     
     /*
+     * @Param:
+     * @Return: array: 
+     * - name
+     * - fanpage_id
+     * - long_lived_access_token
+     */
+    public function get_page_information($fanpage_id, $access_token) {
+        
+        //*** Call api
+        $pages = $this->get_user_pages($access_token);
+        foreach ($pages as $item) {
+            $item = $item->asArray(); //Convert oject to array
+            if ($fanpage_id == $item['id']) {
+                $result = array(
+                    'name' => $item['name'],
+                    'fanpage_id' => $item['id'],
+                    'long_lived_access_token' => $this->exchange_long_lived_token($item['access_token']),
+                    'cover' => $this->get_cover_url($item['id'], $access_token)
+                );
+                return $result;
+            }
+        }
+        return null;        
+    }
+    
+    
+    /*
      * @Param
-     * @Return
+     * @Return: array
      */
     
     public function get_user_pages($access_token) {
@@ -80,6 +107,25 @@ class Facebook
 
         //*** Get array of Page objects
         return $response->getPropertyAsArray('data');
+    }
+    
+    /*
+     * @Param: Page_id,
+     * @Return: url string | bool
+     */
+    public function get_cover_url($page_id, $access_token) {
+        
+        $session = $this->get_session_from_token($access_token);
+        if (!$session->validate()) return false;
+        
+        $request = (new FacebookRequest($session, 'GET', '/'. $page_id))->execute();
+        $response = $request->getGraphObject()->asArray();
+
+        if (isset($response['cover'])) {
+            return $response['cover']->source;
+        }else {
+            return '';
+        }
     }
 
 

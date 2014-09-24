@@ -21,28 +21,59 @@ class Controller_Fanpage extends Controller_Base
     }
     
     /*
-     * @Param
-     * @Result
+     * Add new fanpage 
      */
     public function post_add_fanpage() {
         try {
             
-            $page_id = $this->input->post('fanpage');
+            $page_id = \Fuel\Core\Input::post('fanpage');
             
-            if ($this->fanpage_model->add_fanpage($this->get_fanpage($page_id), $this->session->userdata('user_id'))) {
+            if ( Libs\Helper\Features::add_fanpage($page_id, Session::get('user_id'), Session::get('user_token')) ) {
                 //Set flash session
-                Session::set_flash('success', 'Added');
+                Session::set_flash('success', 'Added successfully');
+            } else {
+                Session::set_flash('error', 'Cannot add new fanpage');
             }
-
-            $this->session->set_flashdata();
-            Session::set_flash('error', 'Errors');
+            
+            Fuel\Core\Response::redirect('fanpage/index');
+            
+        } catch (Exception $ex) {
+            Fuel\Core\DB::rollback_transaction();
+            Session::set_flash('error', $ex->getMessage());
+            $this->log_error($ex);
+            Response::redirect('fanpage/index');
+        }
+    }
+    
+    /*
+     * 
+     */
+    public function action_remove_fanpage($fanpage_id) {
+        try {
+            
+            if (Model_UserPage::remove_fanpage( Session::get('user_id'), $fanpage_id) ) {
+                //Set flash session
+                Session::set_flash('success', 'Remove the page successfully');
+            } else {
+                Session::set_flash('error', 'Cannot remove the fanpage');
+            }
             
             Fuel\Core\Response::redirect('fanpage/index');
             
         } catch (Exception $ex) {
             Session::set_flash('error', $ex->getMessage());
-            redirect('fanpage/index');
-        }
+            $this->log_error($ex);
+            Response::redirect('fanpage/index');
+        }        
+    }
+    
+    public function action_test() {
+        
+        Session::set_flash('success','Success');
+        Session::set_flash('error','Danger');
+        Session::set_flash('warning','Danger');
+        Session::set_flash('info','Danger');
+        
     }
     
     

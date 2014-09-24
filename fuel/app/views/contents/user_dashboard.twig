@@ -7,6 +7,7 @@
     <div class="col-md-4 fanpage">
         <a href="#"><img class="img-responsive" src="{{ item['cover'] }}"/></a>
         <a href="#"><h3>{{ item['name'] }}</h3></a>
+        {{ html_anchor('fanpage/remove_fanpage/' ~ item['fanpage_id'], 'Remove', {'class': 'btn btn-danger'} ) }}
     </div><!--/.fanpage-->        
 {% endfor %}
 
