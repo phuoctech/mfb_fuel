@@ -6,3 +6,11 @@
 .fanpage img {
     border-radius: 5px;
 }
+
+#fanpage_list {
+    list-style: none;
+}
+
+#fanpage_list li:nth-child(3n+1) {
+    clear: both;
+}

@@ -2,13 +2,13 @@
 <div class="col-md-12">
     <p class="clearfix"><a href="#" id="add-new-fanpage" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">Add new fanpage</a></p>
 </div>        
-
-{% for item in page_list %}
-    <div class="col-md-4 fanpage">
-        <a href="#"><img class="img-responsive" src="{{ item['cover'] }}"/></a>
-        <a href="#"><h3>{{ item['name'] }}</h3></a>
-        {{ html_anchor('fanpage/remove_fanpage/' ~ item['fanpage_id'], 'Remove', {'class': 'btn btn-danger'} ) }}
-    </div><!--/.fanpage-->        
-{% endfor %}
-
+<ul id="fanpage_list">
+    {% for item in page_list %}
+        <li class="col-md-4 fanpage">
+            <a href="#"><img class="img-responsive" src="{{ item['cover'] }}"/></a>
+            <a href="#"><h3>{{ item['name'] }}</h3></a>
+            {{ html_anchor('fanpage/remove_fanpage/' ~ item['fanpage_id'], 'Remove', {'class': 'btn btn-danger'} ) }}
+        </li><!--/.fanpage-->        
+    {% endfor %}
+</ul>
 

@@ -1,6 +1,7 @@
 <?php
 use Parser\View;
 use Fuel\Core\Session;
+use Fuel\Core\Input;
 
 class Controller_Fanpage extends Controller_Base
 {
@@ -46,7 +47,7 @@ class Controller_Fanpage extends Controller_Base
     }
     
     /*
-     * 
+     * @Param: int
      */
     public function action_remove_fanpage($fanpage_id) {
         try {
@@ -66,6 +67,73 @@ class Controller_Fanpage extends Controller_Base
             Response::redirect('fanpage/index');
         }        
     }
+    
+    /*
+     * 
+     */
+    public function action_add_status() {
+        
+        //*** Add to DB
+        $data = Libs\Helper\Input::get_new_data_status();
+        
+        if (!Model_Posts::add_new_post($data)) {
+            Session::set_flash('error','Cannot add new post');
+            \Fuel\Core\Response::redirect('fanpage/index');
+        }
+        
+        if ( !empty(Input::post('publish_on')) ) {  
+            //*** Call api
+            
+        }
+        $data = array();
+        
+        if (Model_Posts::add_new_post($data)) {
+            Session::set_flash('success','Added new posts');
+        } else {
+            Session::set_flash('error','Cannot add new post');
+        }
+    }
+    
+    /*
+     * 
+     */
+    public function action_add_image_with_url() {
+        
+        //*** Add to DB
+        $data = Libs\Helper\Input::get_new_data_status();
+        
+        if ( !empty(Input::post('publish_on')) ) {  
+            //*** Call api
+            
+        }
+        $data = array();
+        
+        if (Model_Posts::add_new_post($data)) {
+            Session::set_flash('success','Added new posts');
+        } else {
+            Session::set_flash('error','Cannot add new post');
+        }
+    }
+    
+    /*
+     * 
+     */
+    public function action_add_image_in_local() {
+        
+        //*** Add to DB
+        
+        if ( !empty(Input::post('publish_on')) ) {  
+            //*** Call api
+            
+        }
+        $data = array();
+        
+        if (Model_Posts::add_new_post($data)) {
+            Session::set_flash('success','Added new posts');
+        } else {
+            Session::set_flash('error','Cannot add new post');
+        }
+    }    
     
     public function action_test() {
         
