@@ -15,7 +15,7 @@ class Input
         );
         
         if ( empty(\Fuel\Core\Input::post('publish_instantly')) ) {  
-            $content['publish'] = false;
+            $content['published'] = false;
             $content['scheduled_publish_time'] = \Libs\Datetime::get_timestamp(\Fuel\Core\Input::post('scheduled_publish_time'));   
         }
         

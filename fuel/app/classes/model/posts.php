@@ -36,7 +36,7 @@ class Model_Posts extends Orm\Model
         
         if (!$post->save()) {
             return false;
-        }        
+        }
         return true;
     }
 }

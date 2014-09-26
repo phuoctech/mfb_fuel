@@ -40,23 +40,29 @@ class Features
     }
     
     /*
-     * @Param: array
+     * @Param: json string
      * @Return: bool
      */
     
     public static function post_status_to_fb($data) {
         
+        $data = json_decode($data);
         $flag = false;
-        switch($data['push_facebook_on']) {
-            case 0:
-                //Call to api
-                //$flag = 
-                break;
-            case 1:
-                //Call to api
-                //$flag = 
-                break;
-        }
+        $facebook = new \Libs\Facebook();
+        $page = \Model_Pages::find(\Fuel\Core\Input::post('page_id'));
+        
+        $flag = $facebook->post_status($page->long_lived_access_token, $page->fanpage_id, $data);
+        
+//        switch($data['publish_instantly']) {
+//            case 0: 
+//                //Call to api
+//                //$flag = 
+//                break;
+//            case 1:
+//                //Call to api
+//                
+//                break;
+//        }
         return $flag;
     }
 }

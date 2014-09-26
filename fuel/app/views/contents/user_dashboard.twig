@@ -6,8 +6,12 @@
     {% for item in page_list %}
         <li class="col-md-4 fanpage">
             <a href="#"><img class="img-responsive" src="{{ item['cover'] }}"/></a>
-            <a href="#"><h3>{{ item['name'] }}</h3></a>
-            {{ html_anchor('fanpage/remove_fanpage/' ~ item['fanpage_id'], 'Remove', {'class': 'btn btn-danger'} ) }}
+            <a href="#" class="pull-right"><h3>{{ item['name'] }}</h3></a>
+            <div class="clearfix"></div>
+            <div class="pull-right">
+                {{ html_anchor('fanpage/dashboard/' ~ item['id'], 'Dashboard', {'class': 'btn btn-primary'} ) }}
+                {{ html_anchor('fanpage/remove_fanpage/' ~ item['fanpage_id'], 'Remove', {'class': 'btn btn-danger'} ) }}
+            </div>
         </li><!--/.fanpage-->        
     {% endfor %}
 </ul>

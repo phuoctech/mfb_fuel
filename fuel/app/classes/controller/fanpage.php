@@ -24,8 +24,12 @@ class Controller_Fanpage extends Controller_Base
     /*
      * 
      */
-    public function action_dashboard() {
-        $this->template->content = View::forge('contents/add_status.twig');
+    public function action_dashboard($page_id) {
+        
+        //Do stuff
+        $data['page_id'] = $page_id;
+        $this->template->content = View::forge('contents/add_status.twig', $data);
+        
     }
     /*
      * Add new fanpage 
@@ -86,22 +90,25 @@ class Controller_Fanpage extends Controller_Base
      */
     public function post_add_status() {
         
-        //*** Add to DB
         $data = Libs\Helper\Input::get_new_data_status();
         
+        if ( !empty(Input::post('push_facebook_on')) ) {  
+            //*** Call api
+            if (!\Libs\Helper\Features::post_status_to_fb($data['content'])) {
+                //Unset push_facebook_on
+                $data['push_facebook_on'] = 0;
+                Session::set_flash('warning','Cannot post to facebook. Please try again later');
+            }
+        }
+        
+        //*** Add to DB
         if (!Model_Posts::add_new_post($data)) {
             Session::set_flash('error','Cannot add new post');
             \Fuel\Core\Response::redirect('fanpage/index');
         }
         
-        if ( !empty(Input::post('push_facebook_on')) ) {  
-            //*** Call api
-            if (!\Libs\Helper\Features::post_status_to_fb($data)) {
-                Session::set_flash('error','Cannot post to facebook. Please try again later');
-            }
-        }
         Session::set_flash('success', 'Added new post');
-        Response::redirect('fanpage/dashboard');
+        Response::redirect('fanpage/dashboard/'. Input::post('page_id'));
     }
     
     /*
@@ -138,6 +145,7 @@ class Controller_Fanpage extends Controller_Base
         
         if ( !empty(Input::post('push_facebook_on')) ) {  
             //*** Call api
+            
             
         }        
     }    

@@ -127,7 +127,35 @@ class Facebook
             return '';
         }
     }
+    
+    /*
+     * @Param: array
+     * @Return: bool
+     */
+    public function post_status($page_access_token, $page_id, $data) {
+        
+        $session = $this->get_session_from_token($page_access_token);
+        $session->validate();
+        
+        $fb_data = array();
+        foreach($data as $key=>$item) {
+            $fb_data[$key] = $item;
+        }
 
+        $request = (new FacebookRequest($session, 'POST', '/'.$page_id.'/feed', $fb_data));
+        
+        $respone = $request->execute();
+        return true;
+        
+    }
+    
+    /*
+     * @Param: array
+     * @Return: bool
+     */
+    public function post_status_with_scheduled_time($page_access_token, $page_id, $data) {
+        
+    }    
 
     /**************************************************************************/
     /*
