@@ -17,7 +17,7 @@ class Model_Posts extends Orm\Model
             'key_to' => 'id',
             'cascade_save' => true,
             'cascade_delete' => false,
-        ),        
+        ),
     );
     
     /*
@@ -26,21 +26,18 @@ class Model_Posts extends Orm\Model
      */
     public static function add_new_post($data) {
         
-        $post = Model_Posts::forge($data);
-        
-        $user = Model_Users::find('first', array('where' => array('fb_id' => $data['author'])));
+        $user = Model_Users::find('first', array('where' => array('fb_id' => $data['author'] ) ));
         $page = Model_Pages::find($data['page_id']);
         
+        $post = Model_Posts::forge($data);
         $post->author = $user->id;
+        $post->modifier = $user->id;
         $post->page_id = $page->id;
-        
-        
         
         if (!$post->save()) {
             return false;
-        }
+        }        
         return true;
     }
-    
 }
 

@@ -22,6 +22,12 @@ class Controller_Fanpage extends Controller_Base
     }
     
     /*
+     * 
+     */
+    public function action_dashboard() {
+        $this->template->content = View::forge('contents/add_status.twig');
+    }
+    /*
      * Add new fanpage 
      */
     public function post_add_fanpage() {
@@ -65,13 +71,20 @@ class Controller_Fanpage extends Controller_Base
             Session::set_flash('error', $ex->getMessage());
             $this->log_error($ex);
             Response::redirect('fanpage/index');
-        }        
+        }
     }
     
     /*
-     * 
+     * Go to Add status page
      */
-    public function action_add_status() {
+    public function get_add_status() {
+        $this->template->content = View::forge('contents/add_status.twig');
+    }    
+    
+    /*
+     * Add new status
+     */
+    public function post_add_status() {
         
         //*** Add to DB
         $data = Libs\Helper\Input::get_new_data_status();
@@ -81,38 +94,33 @@ class Controller_Fanpage extends Controller_Base
             \Fuel\Core\Response::redirect('fanpage/index');
         }
         
-        if ( !empty(Input::post('publish_on')) ) {  
+        if ( !empty(Input::post('push_facebook_on')) ) {  
             //*** Call api
-            
+            if (!\Libs\Helper\Features::post_status_to_fb($data)) {
+                Session::set_flash('error','Cannot post to facebook. Please try again later');
+            }
         }
-        $data = array();
-        
-        if (Model_Posts::add_new_post($data)) {
-            Session::set_flash('success','Added new posts');
-        } else {
-            Session::set_flash('error','Cannot add new post');
-        }
+        Session::set_flash('success', 'Added new post');
+        Response::redirect('fanpage/dashboard');
     }
     
     /*
      * 
-     */
+     */ 
     public function action_add_image_with_url() {
         
         //*** Add to DB
-        $data = Libs\Helper\Input::get_new_data_status();
+        //$data = Libs\Helper\Input::get_new_data_status();
         
-        if ( !empty(Input::post('publish_on')) ) {  
+        if (!Model_Posts::add_new_post($data)) {
+            Session::set_flash('error','Cannot add new post');
+            \Fuel\Core\Response::redirect('fanpage/index');
+        }
+        
+        if ( !empty(Input::post('push_facebook_on')) ) {  
             //*** Call api
             
-        }
-        $data = array();
-        
-        if (Model_Posts::add_new_post($data)) {
-            Session::set_flash('success','Added new posts');
-        } else {
-            Session::set_flash('error','Cannot add new post');
-        }
+        }        
     }
     
     /*
@@ -121,28 +129,36 @@ class Controller_Fanpage extends Controller_Base
     public function action_add_image_in_local() {
         
         //*** Add to DB
+        //$data = Libs\Helper\Input::get_new_data_status();
         
-        if ( !empty(Input::post('publish_on')) ) {  
+        if (!Model_Posts::add_new_post($data)) {
+            Session::set_flash('error','Cannot add new post');
+            \Fuel\Core\Response::redirect('fanpage/index');
+        }
+        
+        if ( !empty(Input::post('push_facebook_on')) ) {  
             //*** Call api
             
-        }
-        $data = array();
-        
-        if (Model_Posts::add_new_post($data)) {
-            Session::set_flash('success','Added new posts');
-        } else {
-            Session::set_flash('error','Cannot add new post');
-        }
+        }        
     }    
     
     public function action_test() {
-        
-        Session::set_flash('success','Success');
-        Session::set_flash('error','Danger');
-        Session::set_flash('warning','Danger');
-        Session::set_flash('info','Danger');
-        
+        $this->template->content = View::forge('contents/add_status.twig');
     }
     
+    /*******************************/
+    /*
+     * SAMPLE FUNCTION
+     */
+    private function sample_function() {
+        try {
+            // Stuff
+            
+        } catch (Exception $ex) {
+            Session::set_flash('error', $ex->getMessage());
+            $this->log_error($ex);
+            Response::redirect('fanpage/index');
+        }
+    }
     
 }

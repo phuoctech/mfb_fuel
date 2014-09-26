@@ -38,4 +38,25 @@ class Features
         return true;
         
     }
+    
+    /*
+     * @Param: array
+     * @Return: bool
+     */
+    
+    public static function post_status_to_fb($data) {
+        
+        $flag = false;
+        switch($data['push_facebook_on']) {
+            case 0:
+                //Call to api
+                //$flag = 
+                break;
+            case 1:
+                //Call to api
+                //$flag = 
+                break;
+        }
+        return $flag;
+    }
 }

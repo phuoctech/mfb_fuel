@@ -1,0 +1,56 @@
+{{ form_open('fanpage/add_status') }}
+
+<div class="form-group clearfix">
+    <label class="control-label">Message</label>
+    <div class="">
+        <textarea class="form-control col-md-10" name="message" type="text" rows="5"> </textarea>
+    </div>
+</div>
+
+<div class="form-group clearfix">
+    <label class="control-label">Link to share</label>
+    <div class="">
+        <input class="form-control col-md-10" name="link" />
+    </div>
+</div>
+
+<div class="form-group clearfix">
+    <label class="control-label">Push to facebook</label>
+    <div class="">
+        <label class="radio-inline">
+            <input type="radio" name="push_facebook_on" value="1" checked=""> Yes
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="push_facebook_on" value="0"> No
+        </label>                  
+    </div>
+</div>
+
+<div class="form-group clearfix">
+    <label class="control-label">Publish now</label>
+    <div class="">
+        <label class="radio-inline">
+            <input type="radio" name="publish_instantly" value="1" checked=""> Yes
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="publish_instantly" value="0"> No
+        </label>                  
+    </div>
+</div>
+<div class="form-group clearfix">
+    <label class="control-label">Time</label>
+    <div class="">
+        <input class ="form-control col-md-10 datetime-picker" name="scheduled_publish_time" type="text"/>
+    </div>
+</div>
+
+<div class="form-group">
+    <input class ="btn btn-primary" type="submit" name="submit" value="submit" />
+</div>
+
+<div class="hidden form-group">
+    <input class ="form-control" type="hidden" name="type" value="1" />
+    <input class ="form-control" type="hidden" name="page_id" value="13{{page_id}}" />
+</div>
+
+{{ form_close() }}
