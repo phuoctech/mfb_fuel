@@ -22,7 +22,13 @@
                     <td>@{{ item.author }}</td>
                     <td>@{{ item.modifier }}</td>
                     <td><span>{{ item.date_modified }}</span></td>
-                    <td class="push-fb"><i class="push-fb-yes glyphicon glyphicon-ok"></i></td>
+                    <td class="push-fb">
+                        {% if item.push_to_facebook %}
+                            <i class="push-fb-yes glyphicon glyphicon-ok"></i>
+                        {% else %}
+                            <i class="push-fb-non glyphicon glyphicon-remove"></i>
+                        {% endif %}
+                    </td>
                     <td>
                         {{ html_anchor('fanpage/index', "<i class='fa fa-list'></i> E", {'class': 'btn btn-outline btn-success' }) }}
                         {{ html_anchor('fanpage/index', "<i class='fa fa-times'></i> D", {'class': 'btn btn-outline btn-danger btn-delete-page'}) }}
