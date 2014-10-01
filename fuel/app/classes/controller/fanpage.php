@@ -26,9 +26,20 @@ class Controller_Fanpage extends Controller_Base
      */
     public function action_dashboard($page_id) {
         
-        //Do stuff
+        // Get post list of this page:
+        $data['post_list'] = Model_Posts::find('all', array('where'=>array('page_id'=>$page_id), 'order_by' => array('date_modified'=>'desc')));
+        
+        //Convert to json string to array
+        foreach ($data['post_list'] as $item) {
+            $item->content = json_decode($item->content);
+            $item->author = $item->_user->fullname;
+            $item->modifier = Model_Users::get_user_name($item->modifier);
+            $item->date_modified = date('d-M-Y - H:m', $item->date_modified);
+        
+        }
+
         $data['page_id'] = $page_id;
-        $this->template->content = View::forge('contents/add_status.twig', $data);
+        $this->template->content = View::forge('contents/page_dashboard.twig', $data);
         
     }
     /*
@@ -81,8 +92,9 @@ class Controller_Fanpage extends Controller_Base
     /*
      * Go to Add status page
      */
-    public function get_add_status() {
-        $this->template->content = View::forge('contents/add_status.twig');
+    public function get_add_status($page_id) {
+        $data['page_id'] = $page_id;
+        $this->template->content = View::forge('contents/add_status.twig', $data);
     }    
     
     /*

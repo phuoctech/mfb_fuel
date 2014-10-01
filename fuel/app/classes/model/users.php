@@ -34,5 +34,13 @@ class Model_Users extends Orm\Model
         return true;
     }
     
+    /*
+     * @Param: int
+     * @Return: string
+     */
+    public static function get_user_name($user_id) {
+        $user = Model_Users::find($user_id);
+        return $user->fullname;
+    }
 }
 

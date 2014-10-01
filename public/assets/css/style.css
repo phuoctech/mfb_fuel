@@ -14,3 +14,23 @@
 #fanpage_list li:nth-child(3n+1) {
     clear: both;
 }
+
+#fanpage_list .fanpage {
+    margin: 5px 0;
+}
+
+.push-fb {
+    /*text-align: center;*/
+    font-size: 15px;
+}
+.push-fb-non {
+    color: #d43f3a;
+}
+.push-fb-yes {
+    color: #5cb85c;
+}
+
+#page-dashboard-table a {
+    margin: 2px 0;
+    /*min-width: 80px;*/
+}
