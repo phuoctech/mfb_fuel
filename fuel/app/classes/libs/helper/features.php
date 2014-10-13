@@ -52,17 +52,39 @@ class Features
         $page = \Model_Pages::find(\Fuel\Core\Input::post('page_id'));
         
         $flag = $facebook->post_status($page->long_lived_access_token, $page->fanpage_id, $data);
+        return $flag;
+    }
+    
+    /*
+     * @Param: int page_id
+     * @Return: bool
+     */
+    public static function update_page_token($page_id, $access_token) {
         
-//        switch($data['publish_instantly']) {
-//            case 0: 
-//                //Call to api
-//                //$flag = 
-//                break;
-//            case 1:
-//                //Call to api
-//                
-//                break;
-//        }
+        $page = \Model_Pages::find($page_id);
+        
+        //*** Call api to get fanpage info
+        $facebook = new \Libs\Facebook();
+        $fpage = $facebook->get_page_information($page->fanpage_id, $access_token);
+        $page->long_lived_access_token = $fpage['long_lived_access_token'];
+        
+        if ($page->save()) return true;
+        
+        return false;
+    }    
+    
+    /*
+     * @Param: json string
+     * @Return: bool
+     */
+    public static function post_photo_to_fb_by_url($data) {
+        $data = json_decode($data);
+        $flag = false;
+        $facebook = new \Libs\Facebook();
+        $page = \Model_Pages::find(\Fuel\Core\Input::post('page_id'));
+        
+        $flag = $facebook->post_photo_by_url($page->long_lived_access_token, $page->fanpage_id, $data);
+        
         return $flag;
     }
 }

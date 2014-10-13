@@ -151,10 +151,22 @@ class Facebook
     
     /*
      * @Param: array
+     * @Param: API URL: /{page_id}/photos
      * @Return: bool
      */
-    public function post_status_with_scheduled_time($page_access_token, $page_id, $data) {
+    public function post_photo_by_url($page_access_token, $page_id, $data) {
+        $session = $this->get_session_from_token($page_access_token);
+        $session->validate();
         
+        $fb_data = array();
+        foreach($data as $key=>$item) {
+            $fb_data[$key] = $item;
+        }
+
+        $request = (new FacebookRequest($session, 'POST', '/'.$page_id.'/photos', $fb_data));
+        
+        $respone = $request->execute();
+        return true;
     }    
 
     /**************************************************************************/
@@ -164,9 +176,7 @@ class Facebook
      * @Return: string | bool
      */
     public function get_session_from_token($access_token) {
-        
         return new FacebookSession($access_token);
-        
     }
 }
 

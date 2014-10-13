@@ -26,6 +26,10 @@ class Controller_Fanpage extends Controller_Base
      */
     public function action_dashboard($page_id) {
         
+        //Update Page token
+        if (!Libs\Helper\Features::update_page_token($page_id, Session::get('user_token'))) {
+            Session::set_flash('warning', 'There is an error when update page token');
+        }
         // Get post list of this page:
         $data['post_list'] = Model_Posts::find('all', array('where'=>array('page_id'=>$page_id), 'order_by' => array('date_modified'=>'desc')));
         
@@ -35,10 +39,10 @@ class Controller_Fanpage extends Controller_Base
             $item->author = $item->_user->fullname;
             $item->modifier = Model_Users::get_user_name($item->modifier);
             $item->date_modified = date('d-M-Y - H:m', $item->date_modified);
-        
         }
 
         $data['page_id'] = $page_id;
+        $this->template->header = View::forge('header.twig', $data);
         $this->template->content = View::forge('contents/page_dashboard.twig', $data);
         
     }
@@ -94,8 +98,12 @@ class Controller_Fanpage extends Controller_Base
      */
     public function get_add_status($page_id) {
         $data['page_id'] = $page_id;
+        
+        //*** Templates
+        $this->template->title = 'Post new status';
+        $this->template->header = View::forge('header.twig', $data);
         $this->template->content = View::forge('contents/add_status.twig', $data);
-    }    
+    }
     
     /*
      * Add new status
@@ -124,42 +132,46 @@ class Controller_Fanpage extends Controller_Base
     }
     
     /*
-     * 
-     */ 
-    public function action_add_image_with_url() {
+     * @Param: int
+     */
+    public function get_add_image_with_url($page_id) {
+        $data['page_id'] = $page_id;
+        
+        //*** Templates
+        $this->template->title = 'Post new photo';
+        $this->template->header = View::forge('header.twig', $data);
+        $this->template->content = View::forge('contents/add_image.twig', $data);
+    }
+    
+    public function post_add_image_with_url() {
+        
+        $data = Libs\Helper\Input::get_new_data_photo_by_url();
+        
+        if ( !empty(Input::post('push_facebook_on')) ) {  
+            //*** Call api
+            if ( !Libs\Helper\Features::post_photo_to_fb_by_url($data['content']) ) {
+                //Unset push_facebook_on
+                $data['push_facebook_on'] = 0;
+                Session::set_flash('warning','Cannot post to facebook. Please try again later');
+            }
+            
+        }
         
         //*** Add to DB
-        //$data = Libs\Helper\Input::get_new_data_status();
-        
         if (!Model_Posts::add_new_post($data)) {
             Session::set_flash('error','Cannot add new post');
             \Fuel\Core\Response::redirect('fanpage/index');
         }
         
-        if ( !empty(Input::post('push_facebook_on')) ) {  
-            //*** Call api
-            
-        }        
+        Session::set_flash('success', 'Added new post');
+        Response::redirect('fanpage/dashboard/'. Input::post('page_id'));        
     }
     
     /*
      * 
      */
     public function action_add_image_in_local() {
-        
-        //*** Add to DB
-        //$data = Libs\Helper\Input::get_new_data_status();
-        
-        if (!Model_Posts::add_new_post($data)) {
-            Session::set_flash('error','Cannot add new post');
-            \Fuel\Core\Response::redirect('fanpage/index');
-        }
-        
-        if ( !empty(Input::post('push_facebook_on')) ) {  
-            //*** Call api
-            
-            
-        }        
+                
     }    
     
     public function action_test() {
