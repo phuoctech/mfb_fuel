@@ -50,7 +50,7 @@ class Controller_Login extends \Fuel\Core\Controller_Template
             
             //*** Set session for user
             Fuel\Core\Session::set('user_token', $long_lived_session->getToken());
-            Fuel\Core\Session::set('user_id', $user_info->getId());            
+            Fuel\Core\Session::set('user_id', $user_info->getId());
             
             //*** Redirect to home
             \Fuel\Core\Response::redirect('fanpage/index');
