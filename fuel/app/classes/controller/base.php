@@ -1,6 +1,7 @@
 <?php
 use Fuel\Core\Session;
 use Fuel\Core\Response;
+use Fuel\Core\Log;
 
 class Controller_Base extends Fuel\Core\Controller_Template
 {

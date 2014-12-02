@@ -1,18 +1,18 @@
 {{ html_anchor('fanpage/dashboard/'~ page_id, '<i class="glyphicon glyphicon-arrow-left"></i> Back', {'class': 'help-block'}) }}
 
-{{ form_open('fanpage/add_status') }}
+{{ form_open('fanpage/edit_post') }}
 
 <div class="form-group clearfix">
     <label class="control-label">Message</label>
     <div class="">
-        <textarea class="form-control col-md-10" name="message" type="text" rows="5"> </textarea>
+        <textarea class="form-control col-md-10" name="message" type="text" rows="5">{{ post.content.message }}</textarea>
     </div>
 </div>
 
 <div class="form-group clearfix">
     <label class="control-label">Link to share</label>
     <div class="">
-        <input class="form-control col-md-10" name="link" />
+        <input class="form-control col-md-10" name="link" value="{{ post.content.link }}"/>
     </div>
 </div>
 
@@ -42,17 +42,18 @@
 <div class="form-group clearfix">
     <label class="control-label">Time</label>
     <div class="">
-        <input class ="form-control col-md-10 datetime-picker" name="scheduled_publish_time" type="text"/>
+        <input class ="form-control col-md-10 datetime-picker" name="scheduled_publish_time" type="text" value="{{ post.content.scheduled_publish_time }}"/>
     </div>
 </div>
 
 <div class="form-group">
-    <input class ="btn btn-primary" type="submit" name="submit" value="submit" />
+    <input class ="btn btn-primary" type="submit" name="submit" value="Save" />
 </div>
 
 <div class="hidden form-group">
     <input class ="form-control" type="hidden" name="type" value="1" />
     <input class ="form-control" type="hidden" name="page_id" value="{{page_id}}" />
+    <input class ="form-control" type="hidden" name="post_id" value="{{post.id}}" />
 </div>
 
 {{ form_close() }}

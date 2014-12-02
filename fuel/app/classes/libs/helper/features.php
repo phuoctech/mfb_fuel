@@ -51,7 +51,11 @@ class Features
         $facebook = new \Libs\Facebook();
         $page = \Model_Pages::find(\Fuel\Core\Input::post('page_id'));
         
-        $flag = $facebook->post_status($page->long_lived_access_token, $page->fanpage_id, $data);
+        //*** Check if page has existed
+        if (isset($page)) {
+            $flag = $facebook->post_status($page->long_lived_access_token, $page->fanpage_id, $data);
+        }
+        
         return $flag;
     }
     

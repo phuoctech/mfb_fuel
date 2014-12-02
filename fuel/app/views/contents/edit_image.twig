@@ -1,6 +1,6 @@
 {{ html_anchor('fanpage/dashboard/'~ page_id, '<i class="glyphicon glyphicon-arrow-left"></i> Back', {'class': 'help-block'}) }}
 
-{{ form_open('fanpage/add_status') }}
+{{ form_open('fanpage/add_image_with_url') }}
 
 <div class="form-group clearfix">
     <label class="control-label">Message</label>
@@ -10,7 +10,7 @@
 </div>
 
 <div class="form-group clearfix">
-    <label class="control-label">Link to share</label>
+    <label class="control-label">Link to image</label>
     <div class="">
         <input class="form-control col-md-10" name="link" />
     </div>
@@ -20,10 +20,10 @@
     <label class="control-label">Push to facebook</label>
     <div class="">
         <label class="radio-inline">
-            <input type="radio" name="push_facebook_on" value="1"> Yes
+            <input type="radio" name="push_facebook_on" value="1" checked=""> Yes
         </label>
         <label class="radio-inline">
-          <input type="radio" name="push_facebook_on" checked value="0"> No
+          <input type="radio" name="push_facebook_on" value="0"> No
         </label>                  
     </div>
 </div>
@@ -51,7 +51,7 @@
 </div>
 
 <div class="hidden form-group">
-    <input class ="form-control" type="hidden" name="type" value="1" />
+    <input class ="form-control" type="hidden" name="type" value="2" />
     <input class ="form-control" type="hidden" name="page_id" value="{{page_id}}" />
 </div>
 
