@@ -21,8 +21,9 @@ class Controller_Fanpage extends Controller_Base
         );
     }
     
-    /*
+    /**
      * 
+     * @param string $page_id
      */
     public function action_dashboard($page_id) {
         

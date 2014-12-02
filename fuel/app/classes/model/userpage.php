@@ -4,11 +4,11 @@ class Model_UserPage extends Orm\Model
 {
     protected static $_table_name = 'user_page';
     
-    /*
-     * @Param: 
-     * - user_id: string
-     * - fanpage_id: string
-     * @Return: bool
+    /**
+     * 
+     * @param string $user_id
+     * @param string $fanpage_id
+     * @return boolean
      */
     public static function remove_fanpage($user_id, $fanpage_id) {
         
