@@ -1,21 +1,32 @@
 {{ html_anchor('fanpage/dashboard/'~ page_id, '<i class="glyphicon glyphicon-arrow-left"></i> Back', {'class': 'help-block'}) }}
 
-{{ form_open('fanpage/add_image_with_url') }}
+{{ form_open('fanpage/edit_post') }}
 
 <div class="form-group clearfix">
     <label class="control-label">Message</label>
     <div class="">
-        <textarea class="form-control col-md-10" name="message" type="text" rows="5"> </textarea>
+        <textarea class="form-control col-md-10" name="message" type="text" rows="5">{{ post.content.message }}</textarea>
     </div>
 </div>
 
 <div class="form-group clearfix">
     <label class="control-label">Link to image</label>
-    <div class="">
-        <input class="form-control col-md-10" name="link" />
+    <div class="row">
+        <div class="col-md-6 clearfix">
+            <input class="form-control col-md-10" name="link" value="{{ post.content.url }}" />
+        </div>
+{#        <br/>#}
+        <div class="col-md-6 clearfix">
+            <img class="img-thumbnail img-responsive" src="{{ post.content.url }}" />
+        </div>
     </div>
 </div>
 
+{#<div class="form-group">
+    <label>Choose Image</label>
+    <input type="file" name="image">
+</div>
+#}        
 <div class="form-group clearfix">
     <label class="control-label">Push to facebook</label>
     <div class="">
@@ -32,17 +43,17 @@
     <label class="control-label">Publish now</label>
     <div class="">
         <label class="radio-inline">
-            <input type="radio" name="publish_instantly" value="1" checked=""> Yes
+            <input type="radio" name="publish_instantly" value="1"> Yes
         </label>
         <label class="radio-inline">
-          <input type="radio" name="publish_instantly" value="0"> No
+          <input type="radio" name="publish_instantly" value="0" checked> No
         </label>                  
     </div>
 </div>
 <div class="form-group clearfix">
     <label class="control-label">Time</label>
     <div class="">
-        <input class ="form-control col-md-10 datetime-picker" name="scheduled_publish_time" type="text"/>
+        <input class ="form-control col-md-10 datetime-picker" name="scheduled_publish_time" type="text" value="{{ post.content.scheduled_publish_time }}"/>
     </div>
 </div>
 
@@ -52,6 +63,7 @@
 
 <div class="hidden form-group">
     <input class ="form-control" type="hidden" name="type" value="2" />
+    <input class ="form-control" type="hidden" name="post_id" value="{{ post.id }}" />
     <input class ="form-control" type="hidden" name="page_id" value="{{page_id}}" />
 </div>
 

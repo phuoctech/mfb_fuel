@@ -30,10 +30,9 @@ class Controller_Fanpage extends Controller_Base
     public function action_dashboard($page_id = null) {
         
         //Update Page token
-        //Needn't use [?]
-//        if (!Libs\Helper\Features::update_page_token($page_id, Session::get('user_token'))) {
-//            Session::set_flash('warning', 'There is an error when update page token');
-//        }
+        if (!Libs\Helper\Features::update_page_token($page_id, Session::get('user_token'))) {
+            Session::set_flash('warning', 'There is an error when update page token');
+        }
         
         //*** Check if page_id is validate: 
         if ( empty(Model_Pages::find($page_id))) {
@@ -180,15 +179,8 @@ class Controller_Fanpage extends Controller_Base
         Response::redirect('fanpage/dashboard/'. Input::post('page_id'));        
     }
     
-    /*
-     * 
-     */
     public function action_add_image_in_local() {
                 
-    }    
-    
-    public function action_test() {
-        $this->template->content = View::forge('contents/add_status.twig');
     }
     
     /**
@@ -215,12 +207,23 @@ class Controller_Fanpage extends Controller_Base
             //*** Templates
             $this->template->title = "Edit Post #{$post_id}";
             $this->template->header = View::forge('header.twig', $data);
-            $this->template->content = View::forge('contents/edit_status.twig', $data);
+            
+            if ($post->type == 1) {
+                $this->template->content = View::forge('contents/edit_status.twig', $data);
+            }else {
+                $this->template->content = View::forge('contents/edit_image.twig', $data);
+            }
+            
         }
     }
     
     public function post_edit_post() {
-        $data = Libs\Helper\Input::get_edit_status();
+        $data = Libs\Helper\Input::get_edit_data(Input::post('type'));
+        //*** Validate data
+        if (empty($data)) {
+            Session::set_flash('error','Oops. The data is not validated. Please try again.');
+            Response::redirect('fanpage/edit_post/'. Input::post('post_id'));
+        }
         
         if ( !empty(Input::post('push_facebook_on')) ) {  
             //*** Call api

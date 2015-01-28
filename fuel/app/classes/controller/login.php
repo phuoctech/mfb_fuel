@@ -1,5 +1,6 @@
 <?php
 use Fuel\Core\Controller;
+use Fuel\Core\Session;
 use Facebook\FacebookSession;
 use Facebook\FacebookRedirectLoginHelper;
 use Facebook\FacebookRequest;
@@ -12,15 +13,16 @@ class Controller_Login extends \Fuel\Core\Controller_Template
     public $facebook = null;
     public function before() {
         parent::before();
+        $this->facebook = new Libs\Facebook;
+    }
+    /**
+     * 
+     */
+    public function action_index() {
         
         if (Session::get('user_token')) {
             Response::redirect('fanpage/index');
         }
-        
-        $this->facebook = new Libs\Facebook;
-    }
-    public function action_index() {
-        
         try {
             $helper = new FacebookRedirectLoginHelper(Config::get('login_url'));
             $session = $helper->getSessionFromRedirect();
@@ -31,7 +33,6 @@ class Controller_Login extends \Fuel\Core\Controller_Template
         }
         
         if ( isset($session) ) { //login succes
-
             $long_lived_session = $session->getLongLivedSession();
             $access_token = $long_lived_session->getToken();
             
@@ -54,14 +55,21 @@ class Controller_Login extends \Fuel\Core\Controller_Template
             
             //*** Redirect to home
             \Fuel\Core\Response::redirect('fanpage/index');
-            
         } else {
             // login fail
-            $this->template->login_url = $helper->getLoginUrl();
-        }        
+            $this->template->login_url = $helper->getLoginUrl(\Fuel\Core\Config::get('scope'));
+        }
     }
-
-
+    
+    public function action_logout() {
+        //*** Remove Session
+        Session::delete('user_token');
+        Session::delete('user_id');
+        
+        //*** Redirect to home
+        \Fuel\Core\Response::redirect('login');
+    }
+    
     public function action_index1() {
         
         if ( !empty($this->facebook->login()) ) { //Log susscess

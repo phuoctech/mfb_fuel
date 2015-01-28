@@ -34,3 +34,10 @@
     margin: 2px 0;
     /*min-width: 80px;*/
 }
+
+.image-area {
+    border: 2px dotted #5CB85C;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 0 0 10px ;
+}

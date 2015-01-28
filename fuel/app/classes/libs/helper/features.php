@@ -61,6 +61,7 @@ class Features
     
     /*
      * @Param: int page_id
+     * @Param: string access_token
      * @Return: bool
      */
     public static function update_page_token($page_id, $access_token) {
@@ -75,7 +76,7 @@ class Features
         if ($page->save()) return true;
         
         return false;
-    }    
+    }
     
     /*
      * @Param: json string
